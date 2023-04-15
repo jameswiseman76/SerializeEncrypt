@@ -1,0 +1,6 @@
+﻿{
+  "stryker-config": {
+    "solution": "../SerializeEncrypt.sln",
+    "project": "SerializeEncrypt/SerializeEncrypt.csproj"
+  }
+}

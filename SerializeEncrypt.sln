@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializeEncrypt", "SerializeEncrypt\SerializeEncrypt.csproj", "{436203B5-EA33-44E0-B9E1-6F628ECBB26D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializeEncrypt.Tests", "SerializeEncrypt.Tests\SerializeEncrypt.Tests.csproj", "{9DADF99D-7D60-46DA-87AE-41B2647856E0}"
@@ -22,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8C34058-D39D-4D38-97E8-F55A26951A9C}
 	EndGlobalSection
 EndGlobal

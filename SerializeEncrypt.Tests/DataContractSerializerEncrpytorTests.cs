@@ -33,24 +33,32 @@ namespace SerializeEncrypt.Tests
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Security.Cryptography;
-    using Moq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
 
-    [TestClass]
+    [TestClass()]
     public class DataContractSerializerEncrpytorTests
     {
         #region Guard Tests
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_That_Exception_Is_Thrown_When_Null_DataContractSerializer_Is_Passed_To_First_Constructor()
+        public void Exception_Is_Thrown_When_Null_DataContractSerializer_Is_Passed_To_First_Constructor()
         {
             //Act
-            var serializerEncryptor = new DataContractSerializerEncrpytor(null);
+            try
+            {
+                var serializerEncryptor = new DataContractSerializerEncrpytor(null);
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                Assert.AreEqual("Value cannot be null.\r\nParameter name: dataContractSerializerToDecorate", argumentNullException.Message);
+                throw;
+            }
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_That_Exception_Is_Thrown_When_Null_DataContractSerializer_Is_Passed_To_Second_Constructor()
+        public void Exception_Is_Thrown_When_Null_DataContractSerializer_Is_Passed_To_Second_Constructor()
         {
             //Act
             var serializerEncryptor = new DataContractSerializerEncrpytor(
@@ -62,7 +70,7 @@ namespace SerializeEncrypt.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_That_Exception_Is_Thrown_When_Null_cryptoServiceProvider_Is_Passed_To_Constructor()
+        public void Exception_Is_Thrown_When_Null_cryptoServiceProvider_Is_Passed_To_Constructor()
         {
             //Act
             var serializerEncryptor = new DataContractSerializerEncrpytor(
@@ -74,7 +82,7 @@ namespace SerializeEncrypt.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_That_Exception_Is_Thrown_When_Null_encryptionKey_Is_Passed_To_Constructor()
+        public void Exception_Is_Thrown_When_Null_encryptionKey_Is_Passed_To_Constructor()
         {
             //Act
             var serializerEncryptor = new DataContractSerializerEncrpytor(
@@ -86,7 +94,7 @@ namespace SerializeEncrypt.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_That_Exception_Is_Thrown_When_Null_encryptionIv_Is_Passed_To_Constructor()
+        public void Exception_Is_Thrown_When_Null_encryptionIv_Is_Passed_To_Constructor()
         {
             //Act
             var serializerEncryptor = new DataContractSerializerEncrpytor(
@@ -98,7 +106,7 @@ namespace SerializeEncrypt.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_That_Exception_Is_Thrown_When_Null_newEncryptionKey_Is_Passed_To_Encrpytion_Override()
+        public void Exception_Is_Thrown_When_Null_newEncryptionKey_Is_Passed_To_Encrpytion_Override()
         {
             // Arrange
             var serializableObject = new SerializableClass { Field = "Field" };
@@ -114,7 +122,7 @@ namespace SerializeEncrypt.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_That_Exception_Is_Thrown_When_Null_newEncryptionIv_Is_Passed_To_Encrpytion_Override()
+        public void Exception_Is_Thrown_When_Null_newEncryptionIv_Is_Passed_To_Encrpytion_Override()
         {
             // Arrange
             var serializableObject = new SerializableClass { Field = "Field" };
@@ -133,10 +141,10 @@ namespace SerializeEncrypt.Tests
         #region Encryption Tests
 
         [TestMethod]
-        public void Verify_That_Output_Stream_Is_Written_To()
+        public void Output_Stream_Is_Written_To()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Verify_That_Output_Stream_Is_Written_To" };
+            var serializableObject = new SerializableClass { Field = "Output_Stream_Is_Written_To" };
 
             var dataContractSerializer = new DataContractSerializer(serializableObject.GetType());
             var serializerEncryptor = new DataContractSerializerEncrpytor(dataContractSerializer);
@@ -156,10 +164,10 @@ namespace SerializeEncrypt.Tests
         }
 
         [TestMethod]
-        public void Verify_That_Identical_Encrpytion_Is_Applied_With_When_Reapplied_With_Default_Encryption()
+        public void Identical_Encrpytion_Is_Applied_With_When_Reapplied_With_Default_Encryption()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Verify_That_Identical_Encrpytion_Is_Applied_With_When_Reapplied_With_Default_Encryption" };
+            var serializableObject = new SerializableClass { Field = "Identical_Encrpytion_Is_Applied_With_When_Reapplied_With_Default_Encryption" };
 
             var streamWithEncryption = new List<byte>();
             var firstStreamWithEncryption = new List<byte>();
@@ -190,10 +198,10 @@ namespace SerializeEncrypt.Tests
         }
 
         [TestMethod]
-        public void Verify_That_Overriden_Encryption_Is_Applied_When_Key_And_Iv_Are_Overriden()
+        public void Overriden_Encryption_Is_Applied_When_Key_And_Iv_Are_Overriden()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Verify_That_Overriden_Encryption_Is_Applied_When_Key_And_Iv_Are_Overriden" };
+            var serializableObject = new SerializableClass { Field = "Overriden_Encryption_Is_Applied_When_Key_And_Iv_Are_Overriden" };
 
             var streamWithEncryption = new List<byte>();
             var streamWithDefaultEncryption = new List<byte>();
@@ -229,10 +237,10 @@ namespace SerializeEncrypt.Tests
         }
 
         [TestMethod]
-        public void Verify_That_Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_Constructor_Overload()
+        public void Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_Constructor_Overload()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Verify_That_Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_Constructor_Overload" };
+            var serializableObject = new SerializableClass { Field = "Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_Constructor_Overload" };
 
             var streamWithEncryption = new List<byte>();
             var streamWithDefaultEncryption = new List<byte>();
@@ -276,10 +284,10 @@ namespace SerializeEncrypt.Tests
         }
 
         [TestMethod]
-        public void Verify_That_Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_OverrideEncryption_Method()
+        public void Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_OverrideEncryption_Method()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Verify_That_Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_OverrideEncryption_Method" };
+            var serializableObject = new SerializableClass { Field = "Overriden_Encryption_Is_Applied_When_Algorithm_Is_Overridden_With_OverrideEncryption_Method" };
 
             var streamWithEncryption = new List<byte>();
             var streamWithDefaultEncryption = new List<byte>();
@@ -322,10 +330,10 @@ namespace SerializeEncrypt.Tests
         }
 
         [TestMethod]
-        public void Test_That_Default_Encrpytion_Can_Be_Restored_And_That_Algorithms_Are_Applied_Correctly()
+        public void Default_Encrpytion_Can_Be_Restored_And_That_Algorithms_Are_Applied_Correctly()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Test_That_Default_Encrpytion_Can_Be_Restored_And_That_Algorithms_Are_Applied_Correctly" };
+            var serializableObject = new SerializableClass { Field = "Default_Encrpytion_Can_Be_Restored_And_That_Algorithms_Are_Applied_Correctly" };
 
             var streamWithEncryption = new List<byte>();
             var streamWithDefaultEncryption = new List<byte>();
@@ -378,10 +386,10 @@ namespace SerializeEncrypt.Tests
         #region Decryption Tests
 
         [TestMethod]
-        public void Test_That_We_Can_Decrpyt_An_Encrypted_Stream()
+        public void We_Can_Decrpyt_An_Encrypted_Stream()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Test_That_We_Can_Decrpyt_An_Encrypted_Stream" };
+            var serializableObject = new SerializableClass { Field = "We_Can_Decrpyt_An_Encrypted_Stream" };
 
             var streamWithEncryption = new List<byte>();
 
@@ -412,10 +420,10 @@ namespace SerializeEncrypt.Tests
 
         [TestMethod]
         [ExpectedException(typeof(CryptographicException))]
-        public void Test_That_We_Cannot_Decrpyt_A_Stream_That_Was_Encrypted_With_Different_Parameters()
+        public void We_Cannot_Decrpyt_A_Stream_That_Was_Encrypted_With_Different_Parameters()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Test_That_We_Cannot_Decrpyt_A_Stream_That_Was_Encrypted_With_Different_Parameters" };
+            var serializableObject = new SerializableClass { Field = "We_Cannot_Decrpyt_A_Stream_That_Was_Encrypted_With_Different_Parameters" };
 
             var streamWithEncryption = new List<byte>();
 
@@ -446,10 +454,10 @@ namespace SerializeEncrypt.Tests
         }
 
         [TestMethod]
-        public void Test_That_We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Parameters()
+        public void We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Parameters()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Test_That_We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Parameters" };
+            var serializableObject = new SerializableClass { Field = "We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Parameters" };
 
             var streamWithEncryption = new List<byte>();
 
@@ -483,10 +491,10 @@ namespace SerializeEncrypt.Tests
         }
 
         [TestMethod]
-        public void Test_That_We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Algorithm()
+        public void We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Algorithm()
         {
             // Arrange
-            var serializableObject = new SerializableClass { Field = "Test_That_We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Algorithm" };
+            var serializableObject = new SerializableClass { Field = "We_Can_Decrpyt_A_Stream_That_Was_Encrypted_With_Overridden_Encryption_Algorithm" };
 
             var streamWithEncryption = new List<byte>();
 
