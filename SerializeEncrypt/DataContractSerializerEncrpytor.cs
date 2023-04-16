@@ -43,9 +43,9 @@ namespace SerializeEncrypt
         /// </summary>
         private static readonly byte[] DefaultEncryptionKey =
         {
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
             1, 2
         };
 
@@ -72,7 +72,7 @@ namespace SerializeEncrypt
         /// <summary>
         /// The crypto service provider
         /// </summary>
-        private SymmetricAlgorithm cryptoServiceProvider = new AesCryptoServiceProvider();
+        private SymmetricAlgorithm cryptoServiceProvider = Aes.Create();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataContractSerializerEncrpytor"/> class.
@@ -168,7 +168,7 @@ namespace SerializeEncrypt
         public void OverrideEncryption(
             byte[] newEncryptionKey,
             byte[] newEncryptionIv,
-            SymmetricAlgorithm newCryptoServiceProvider = null)
+            SymmetricAlgorithm? newCryptoServiceProvider = null)
         {
             if (newEncryptionKey == null)
             {
@@ -184,13 +184,13 @@ namespace SerializeEncrypt
             this.encryptionIv = newEncryptionIv;
             this.cryptoServiceProvider = newCryptoServiceProvider ?? this.cryptoServiceProvider;
         }
-        
+
         /// <summary>
         /// Restores the default encryption.
         /// </summary>
         public void RestoreDefaultEncryption()
         {
-            this.cryptoServiceProvider = new AesCryptoServiceProvider();
+            this.cryptoServiceProvider = Aes.Create();
             this.encryptionKey = DefaultEncryptionKey;
             this.encryptionIv = DefaultEncryptionIv;
         }
